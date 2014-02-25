@@ -12,7 +12,7 @@ int main()
 
 	sf::Clock fps;
 	float frameTime = 0.016;
-	sf::RenderWindow window(sf::VideoMode(800, 600), "HelirinHelirin Helirinin");
+	sf::RenderWindow window(sf::VideoMode(800, 600), "KuruKuru Kuruin");
 	sf::Event event;
 
 	//Main game loop:

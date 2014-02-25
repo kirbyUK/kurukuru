@@ -15,5 +15,8 @@
 # Vim lock files
 *.swp
 
+# Gimp files
+*.xcf
+
 # The binary
 kurukuru

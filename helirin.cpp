@@ -1,15 +1,15 @@
 //kuru.cpp
-#include "kuru.h"
+#include "helirin.h"
 #include "constants.h"
 
-sf::Image Kuru::_image;
+sf::Image Helirin::_image;
 
-bool Kuru::init()
+bool Helirin::init()
 {
 	return _image.loadFromFile(KURU_IMG_PATH);
 }
 
-Kuru::Kuru()
+Helirin::Helirin()
 {
 	//Make the green background transparent:
 	_image.createMaskFromColor(COLOUR_MASK);
@@ -17,7 +17,7 @@ Kuru::Kuru()
 	_sprite.setTexture(_texture);
 
 	//Sets the centre of the sprite to the exact centre of 
-	//Kuru, so it rotatates and moves properly:
+	//Helirin, so it rotatates and moves properly:
 	_sprite.setOrigin((_sprite.getLocalBounds().width / 2), //x 
 					(_sprite.getLocalBounds().height / 2)); //y
 
@@ -27,21 +27,21 @@ Kuru::Kuru()
 }
 
 //Handles non-keyboard events, like rotation:
-void Kuru::handleEvents(float frameTime)
+void Helirin::handleEvents(float frameTime)
 {
-	//Rotate Kuru:
+	//Rotate Helirin:
 	_sprite.rotate(ROTATION_SPEED * frameTime);
 
 	//Check if we've collided with anything:
 	//[COLLISION CHECK CODE]
 }
 
-unsigned short int Kuru::getLives()
+unsigned short int Helirin::getLives()
 {
 	return _lives;
 }
 
-sf::Sprite& Kuru::getSprite()
+sf::Sprite& Helirin::getSprite()
 {
 	return _sprite;
 }

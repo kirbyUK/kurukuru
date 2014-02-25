@@ -1,5 +1,5 @@
 /* 
-* kuru.h
+* helirin.h
 *  Contains the class defintion for the
 *  main character thing the player plays as.
 */
@@ -17,7 +17,7 @@ const float ROTATION_SPEED = 90.0;
 	const std::string KURU_IMG_PATH = "assets/kuru/kuru.png";
 #endif
 
-class Kuru
+class Helirin
 {
 	private:
 		static sf::Image _image;
@@ -30,7 +30,7 @@ class Kuru
 		//Loads the image:
 		static bool init();
 
-		Kuru();
+		Helirin();
 
 		//Handles non-keyboard events, like roation:
 		void handleEvents(float);

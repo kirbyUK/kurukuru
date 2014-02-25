@@ -4,14 +4,14 @@ LIBS=-lsfml-graphics -lsfml-window -lsfml-system
 SDIR=./
 DESTDIR=/usr/local/bin/
 
-kurukuru: main.o kuru.o
-	$(CC) $(LIBS)  -g main.o kuru.o -o kurukuru
+helirinhelirin: main.o helirin.o
+	$(CC) $(LIBS)  -g main.o helirin.o -o kurukuru
 
 main.o: $(SDIR)main.cpp
 	$(CC) $(FLAGS) $(SDIR)main.cpp 
 
-kuru.o: $(SDIR)kuru.h $(SDIR)kuru.cpp $(SDIR)constants.h
-	$(CC) $(FLAGS) $(SDIR)kuru.cpp
+helirin.o: $(SDIR)helirin.h $(SDIR)helirin.cpp $(SDIR)constants.h
+	$(CC) $(FLAGS) $(SDIR)helirin.cpp
 
 .PHONY: install clean
 install:

@@ -4,7 +4,7 @@ LIBS=-lsfml-graphics -lsfml-window -lsfml-system
 SDIR=./
 DESTDIR=/usr/local/bin/
 
-helirinhelirin: main.o helirin.o
+kurukuru: main.o helirin.o
 	$(CC) $(LIBS)  -g main.o helirin.o -o kurukuru
 
 main.o: $(SDIR)main.cpp

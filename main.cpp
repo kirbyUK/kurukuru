@@ -37,6 +37,15 @@ int main()
 		{
 			if(event.type == sf::Event::Closed)
 				window.close();
+
+			//If the window is resized, resize the view
+			//and reposition the text items:
+			if(event.type == sf::Event::Resized)
+			{
+				view.setSize(event.size.width, event.size.height);
+				window.setView(view);
+				interface.update(view);
+			}
 		}
 
 		//Movement:
@@ -48,6 +57,9 @@ int main()
 			helirin.move(LEFT, frameTime);
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			helirin.move(RIGHT, frameTime);
+
+		//Set the centre of the view to the Helirin:
+		view.setCenter(helirin.getSprite().getPosition());
 
 		//Non-player based events:
 		helirin.handleEvents(frameTime);

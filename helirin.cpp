@@ -1,6 +1,5 @@
 //kuru.cpp
 #include "helirin.h"
-#include "constants.h"
 
 sf::Image Helirin::_image;
 
@@ -24,6 +23,17 @@ Helirin::Helirin()
 	_sprite.setPosition(300, 300);
 
 	_lives = 3;
+}
+
+void Helirin::move(Direction d, float frameTime)
+{
+	switch(d)
+	{
+		case UP: 	_sprite.move(0, -(VELOCITY * frameTime)); break;
+		case DOWN:	_sprite.move(0, (VELOCITY * frameTime));  break;
+		case LEFT:	_sprite.move(-(VELOCITY * frameTime), 0); break;
+		case RIGHT:	_sprite.move((VELOCITY * frameTime), 0);  break;
+	}
 }
 
 //Handles non-keyboard events, like rotation:

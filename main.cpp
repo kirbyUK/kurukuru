@@ -1,18 +1,18 @@
-#include "kuru.h"
 #include <iostream>
+#include "helirin.h"
 
 int main()
 {
-	if(! Kuru::init())
+	if(! Helirin::init())
 	{
 		std::cerr << "Failed to load '" << KURU_IMG_PATH << "'!\n"; 
 		return -1;
 	}
-	Kuru kuru;
+	Helirin helirin;
 
 	sf::Clock fps;
 	float frameTime = 0.016;
-	sf::RenderWindow window(sf::VideoMode(800, 600), "KuruKuru Kuruin");
+	sf::RenderWindow window(sf::VideoMode(800, 600), "HelirinHelirin Helirinin");
 	sf::Event event;
 
 	//Main game loop:
@@ -24,10 +24,19 @@ int main()
 			if(event.type == sf::Event::Closed)
 				window.close();
 		}
-		kuru.handleEvents(frameTime);
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+			helirin.move(UP, frameTime);
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+			helirin.move(DOWN, frameTime);
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			helirin.move(LEFT, frameTime);
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			helirin.move(RIGHT, frameTime);
+
+		helirin.handleEvents(frameTime);
 
 		window.clear(sf::Color::White);
-		window.draw(kuru.getSprite());
+		window.draw(helirin.getSprite());
 		window.display();
 
 		frameTime = fps.restart().asSeconds();

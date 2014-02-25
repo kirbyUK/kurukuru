@@ -7,9 +7,14 @@
 #ifndef KURU_H
 #define KURU_H
 #include <SFML/Graphics.hpp>
+#include "constants.h"
 
 //The number of degrees Kuru rotates per second:
 const float ROTATION_SPEED = 90.0;
+
+//The number of pixels moved in a single second
+//of constant movement in any given direction:
+const float VELOCITY = 100.0;
 
 #ifdef _WIN32
 	const std::string KURU_IMG_PATH = "assets\\kuru\\kuru.png";
@@ -31,6 +36,9 @@ class Helirin
 		static bool init();
 
 		Helirin();
+
+		//Moves the Helirin in the given direction:
+		void move(Direction, float);
 
 		//Handles non-keyboard events, like roation:
 		void handleEvents(float);

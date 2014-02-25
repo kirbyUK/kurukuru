@@ -1,6 +1,10 @@
 #include <iostream>
+#include <sstream>
+
 #include "helirin.h"
 #include "interface.h"
+
+float getAverageFPS(float);
 
 int main()
 {
@@ -48,6 +52,17 @@ int main()
 		//Non-player based events:
 		helirin.handleEvents(frameTime);
 
+		//Create strings for the text:
+		float averageFPS = getAverageFPS(1 / frameTime);
+		if(averageFPS != -1)
+		{
+			std::stringstream ss;
+			ss.precision(0);
+			ss.setf(std::ios::fixed);
+			ss << "FPS: " << averageFPS;
+			interface.getText()[FPS].setString(ss.str());
+		}
+
 		//Clearing the window and redrawing everything:
 		window.clear(sf::Color::White);
 		for(int i = 0; i < NUMBER_OF_TEXT_ITEMS; i++)
@@ -59,4 +74,24 @@ int main()
 		frameTime = fps.restart().asSeconds();
 	}
 	return 0;
+}
+
+float getAverageFPS(float time)
+{
+	static float times[150];
+	static int i = 0;
+
+	if(i < 150)
+	{
+		times[i++] = time;
+		return -1;
+	}
+	else
+	{
+		float total = 0;
+		for(int j = 0; j < 150; j++)
+			total += times[j];
+		i = 0;
+		return total / 150;
+	}
 }

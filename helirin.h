@@ -9,7 +9,7 @@
 #include <SFML/Graphics.hpp>
 #include "constants.h"
 
-//The number of degrees Kuru rotates per second:
+//The number of degrees the Helirin rotates per second:
 const float ROTATION_SPEED = 90.0;
 
 //The number of pixels moved in a single second
@@ -17,9 +17,9 @@ const float ROTATION_SPEED = 90.0;
 const float VELOCITY = 100.0;
 
 #ifdef _WIN32
-	const std::string KURU_IMG_PATH = "assets\\kuru\\kuru.png";
+	const std::string KURU_IMG_PATH = "assets\\helirin\\helirin.png";
 #else
-	const std::string KURU_IMG_PATH = "assets/kuru/kuru.png";
+	const std::string KURU_IMG_PATH = "assets/helirin/helirin.png";
 #endif
 
 class Helirin

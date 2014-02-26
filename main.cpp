@@ -60,6 +60,8 @@ int main()
 
 		//Set the centre of the view to the Helirin:
 		view.setCenter(helirin.getSprite().getPosition());
+		window.setView(view);
+		interface.update(view);
 
 		//Non-player based events:
 		helirin.handleEvents(frameTime);

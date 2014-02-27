@@ -5,7 +5,7 @@ sf::Image Helirin::_image;
 
 bool Helirin::init()
 {
-	return _image.loadFromFile(KURU_IMG_PATH);
+	return _image.loadFromFile(HELIRIN_IMG_PATH);
 }
 
 Helirin::Helirin()

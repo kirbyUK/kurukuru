@@ -17,9 +17,9 @@ const float ROTATION_SPEED = 90.0;
 const float VELOCITY = 100.0;
 
 #ifdef _WIN32
-	const std::string KURU_IMG_PATH = "assets\\helirin\\helirin.png";
+	const std::string HELIRIN_IMG_PATH = "assets\\helirin\\helirin.png";
 #else
-	const std::string KURU_IMG_PATH = "assets/helirin/helirin.png";
+	const std::string HELIRIN_IMG_PATH = "assets/helirin/helirin.png";
 #endif
 
 class Helirin

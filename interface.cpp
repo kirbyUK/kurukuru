@@ -18,17 +18,17 @@ Interface::Interface()
 {
 	_text[CLOCK].setFont(_pcSenior);
 	_text[CLOCK].setCharacterSize(16);
-	_text[CLOCK].setColor(sf::Color::Black);
+	_text[CLOCK].setColor(sf::Color::White);
 	_text[CLOCK].setString("TIME: 00'00\"00");
 
 	_text[CLOCK_BESTTIME].setFont(_pcSenior);
 	_text[CLOCK_BESTTIME].setCharacterSize(16);
-	_text[CLOCK_BESTTIME].setColor(sf::Color::Black);
+	_text[CLOCK_BESTTIME].setColor(sf::Color::White);
 	_text[CLOCK_BESTTIME].setString("BEST: 00'00\"00");
 
 	_text[FPS].setFont(_pcSenior);
 	_text[FPS].setCharacterSize(16);
-	_text[FPS].setColor(sf::Color::Black);
+	_text[FPS].setColor(sf::Color::White);
 	_text[FPS].setString("FPS: 000");
 }
 

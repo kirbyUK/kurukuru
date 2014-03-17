@@ -3,11 +3,15 @@
 
 #include "helirin.h"
 #include "interface.h"
+#include "level.h"
 
 float getAverageFPS(float);
 
 int main()
 {
+//	Level level("assets/levels/level1.lvl");
+//	return 0;
+
 	//Loads the Helirin image:
 	if(! Helirin::init())
 	{
@@ -17,9 +21,13 @@ int main()
 	//Loads the fonts:
 	if(! Interface::init())
 		return -1; 
+	//Loads the level textures:
+	if(! Level::init())
+		return -1;
 
 	Helirin helirin;
 	Interface interface;
+	Level level("assets/levels/level1.lvl");
 
 	sf::RenderWindow window(sf::VideoMode(800, 600), "KuruKuru Kuruin");
 	sf::View view = window.getDefaultView();
@@ -45,6 +53,7 @@ int main()
 				view.setSize(event.size.width, event.size.height);
 				window.setView(view);
 				interface.update(view);
+				level.resizeBackground(view);
 			}
 		}
 
@@ -78,10 +87,12 @@ int main()
 		}
 
 		//Clearing the window and redrawing everything:
-		window.clear(sf::Color::White);
+		window.clear();
+		window.draw(level.getBackground());
+		window.draw(level.getShape());
+		window.draw(helirin.getSprite());
 		for(int i = 0; i < NUMBER_OF_TEXT_ITEMS; i++)
 			window.draw(interface.getText()[i]);
-		window.draw(helirin.getSprite());
 		window.display();
 
 		//Get the time of that frame:

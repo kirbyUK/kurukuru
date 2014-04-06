@@ -75,7 +75,7 @@ class Level
 		//Getters:
 		sf::ConvexShape& getShape();
 		sf::Sprite& getBackground();
-		sf::Time getElapsedTime();
+		std::string getElapsedTime();
 };
 
 #endif

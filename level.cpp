@@ -1,6 +1,7 @@
 #include "level.h"
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include <vector>
 #include <cstdlib>
 
@@ -113,6 +114,10 @@ Level::Level(std::string path)
 	//Make the outline:
 	_shape.setOutlineThickness(7);
 	_shape.setOutlineColor(sf::Color::Red);
+
+	//Reset the clock (THIS SHOULD BE MOVED TO level::begin())
+	_levelTimer.restart();
+	_penalties = 0;
 }
 
 void Level::begin()
@@ -146,7 +151,15 @@ sf::Sprite& Level::getBackground()
 	return _background;
 }
 
-sf::Time Level::getElapsedTime()
+std::string Level::getElapsedTime()
 {
-	return (_levelTimer.getElapsedTime() + (sf::seconds(PENALTY * _penalties)));
+	sf::Time t = (_levelTimer.getElapsedTime() + (sf::seconds(PENALTY * _penalties)));
+	float total = t.asSeconds();
+	int minutes = total / 60;
+	int seconds = int(total) % 60;
+	int milliseconds = t.asMilliseconds() / 10;
+
+	std::stringstream ss;
+	ss << "TIME: " << minutes << "'" << seconds << "\"" << milliseconds;
+	return ss.str();
 }

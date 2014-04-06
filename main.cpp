@@ -9,9 +9,6 @@ float getAverageFPS(float);
 
 int main()
 {
-//	Level level("assets/levels/level1.lvl");
-//	return 0;
-
 	//Loads the Helirin image:
 	if(! Helirin::init())
 	{
@@ -67,13 +64,18 @@ int main()
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			helirin.move(RIGHT, frameTime);
 
+		//Non-player based events:
+		helirin.handleEvents(frameTime);
+		if(helirin.checkCollision(level.getShape()))
+		{
+			level.penalise();
+			helirin.ouch(frameTime);
+		}
+
 		//Set the centre of the view to the Helirin:
 		view.setCenter(helirin.getSprite().getPosition());
 		window.setView(view);
 		interface.update(view);
-
-		//Non-player based events:
-		helirin.handleEvents(frameTime);
 
 		//Create strings for the text:
 		float averageFPS = getAverageFPS(1 / frameTime);
@@ -85,6 +87,7 @@ int main()
 			ss << "FPS: " << averageFPS;
 			interface.getText()[FPS].setString(ss.str());
 		}
+		interface.getText()[CLOCK].setString(level.getElapsedTime());
 
 		//Clearing the window and redrawing everything:
 		window.clear();

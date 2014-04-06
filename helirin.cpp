@@ -1,4 +1,4 @@
-//kuru.cpp
+//helirin.cpp
 #include "helirin.h"
 
 sf::Image Helirin::_image;
@@ -34,16 +34,57 @@ void Helirin::move(Direction d, float frameTime)
 		case LEFT:	_sprite.move(-(VELOCITY * frameTime), 0); break;
 		case RIGHT:	_sprite.move((VELOCITY * frameTime), 0);  break;
 	}
+	_directionMoved = d;
 }
 
 //Handles non-keyboard events, like rotation:
 void Helirin::handleEvents(float frameTime)
 {
-	//Rotate Helirin:
-	_sprite.rotate(ROTATION_SPEED * frameTime);
+	//Checks if we recently collided, and if so,
+	//spin the other way around, and move in the
+	//opposite direction to the collision:
+	if(_hitTimer.getElapsedTime().asSeconds() <= COOLDOWN)
+	{
+		_sprite.rotate(-ROTATION_SPEED * frameTime);	
+		switch(_directionMoved)
+		{
+			case UP: 	_sprite.move(0, ((VELOCITY * 1.2) * frameTime)); break;
+			case DOWN:	_sprite.move(0, -((VELOCITY * 1.2) * frameTime));  break;
+			case LEFT:	_sprite.move(((VELOCITY * 1.2) * frameTime), 0); break;
+			case RIGHT:	_sprite.move(-((VELOCITY * 1.2) * frameTime), 0);  break;
+		}
+	}
+	else
+		_sprite.rotate(ROTATION_SPEED * frameTime);
+}
 
-	//Check if we've collided with anything:
-	//[COLLISION CHECK CODE]
+bool Helirin::checkCollision(sf::ConvexShape& s)
+{
+	bool collide = false;
+
+	//The only points that matter are the 4 corners of the
+	//Helirin, as if we've 'collided', it'll be one of these
+	//corners that hits the wall:
+	float left = _sprite.getGlobalBounds().left;
+	float top = _sprite.getGlobalBounds().top;
+	float width = _sprite.getGlobalBounds().width;
+	float height = _sprite.getGlobalBounds().height;
+	if(! s.getGlobalBounds().contains(left, top))
+		collide = true;
+	if(! s.getGlobalBounds().contains(left, (top + height)))
+		collide = true;
+	if(! s.getGlobalBounds().contains((left + width), top))
+		collide = true;
+	if(! s.getGlobalBounds().contains((left + width), (top + height)))
+		collide = true;
+
+	return collide;
+}
+
+void Helirin::ouch(float f)
+{
+	_hitTimer.restart();
+	_lives--;
 }
 
 unsigned short int Helirin::getLives()

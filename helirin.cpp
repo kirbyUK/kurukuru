@@ -27,14 +27,18 @@ Helirin::Helirin()
 
 void Helirin::move(Direction d, float frameTime)
 {
-	switch(d)
+	//Disable movement if we've collided:
+	if(_hitTimer.getElapsedTime().asSeconds() > COOLDOWN)
 	{
-		case UP: 	_sprite.move(0, -(VELOCITY * frameTime)); break;
-		case DOWN:	_sprite.move(0, (VELOCITY * frameTime));  break;
-		case LEFT:	_sprite.move(-(VELOCITY * frameTime), 0); break;
-		case RIGHT:	_sprite.move((VELOCITY * frameTime), 0);  break;
+		switch(d)
+		{
+			case UP: 	_sprite.move(0, -(VELOCITY * frameTime)); break;
+			case DOWN:	_sprite.move(0, (VELOCITY * frameTime));  break;
+			case LEFT:	_sprite.move(-(VELOCITY * frameTime), 0); break;
+			case RIGHT:	_sprite.move((VELOCITY * frameTime), 0);  break;
+		}
+		_directionMoved = d;
 	}
-	_directionMoved = d;
 }
 
 //Handles non-keyboard events, like rotation:

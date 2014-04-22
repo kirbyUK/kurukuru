@@ -64,25 +64,29 @@ void Helirin::handleEvents(float frameTime)
 
 bool Helirin::checkCollision(sf::ConvexShape& s)
 {
-	bool collide = false;
+	unsigned int nvert = s.getPointCount();
 
-	//The only points that matter are the 4 corners of the
-	//Helirin, as if we've 'collided', it'll be one of these
-	//corners that hits the wall:
-	float left = _sprite.getGlobalBounds().left;
-	float top = _sprite.getGlobalBounds().top;
-	float width = _sprite.getGlobalBounds().width;
-	float height = _sprite.getGlobalBounds().height;
-	if(! s.getGlobalBounds().contains(left, top))
-		collide = true;
-	if(! s.getGlobalBounds().contains(left, (top + height)))
-		collide = true;
-	if(! s.getGlobalBounds().contains((left + width), top))
-		collide = true;
-	if(! s.getGlobalBounds().contains((left + width), (top + height)))
-		collide = true;
+	sf::FloatRect r = _sprite.getGlobalBounds();
+	sf::Vector2f p[4];
+	p[0] = sf::Vector2f(r.top, r.left);
+	p[1] = sf::Vector2f(r.top, (r.left + r.width));
+	p[2] = sf::Vector2f((r.top + r.height), r.left);
+	p[3] = sf::Vector2f((r.top + r.height), (r.left + r.width));
 
-	return collide;
+	//Uses the ray casting algorithm on the 4 points of the Helirin, as found
+	//on www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html:
+	for(unsigned int i = 0; i < 4; i++)
+	{
+		for(unsigned int j = 0, k = (nvert - 1); j < nvert; k = j++)
+		{
+			if(((s.getPoint(j).y > p[i].y) != (s.getPoint(k).y > p[i].y)) &&
+				(p[i].x < (s.getPoint(k).x - s.getPoint(j).x) *
+				(p[j].y - s.getPoint(j).y) / 
+				(s.getPoint(k).y - s.getPoint(j).y) + s.getPoint(j).x))
+			return true;	
+		}
+	}
+	return false;
 }
 
 void Helirin::ouch(float f)

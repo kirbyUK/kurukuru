@@ -160,6 +160,20 @@ std::string Level::getElapsedTime()
 	int milliseconds = t.asMilliseconds() % 100;
 
 	std::stringstream ss;
-	ss << "TIME: " << minutes << "'" << seconds << "\"" << milliseconds;
+	ss << "TIME: ";
+
+	//Append a zero to the minutes if nessecary:
+	if(minutes < 10)
+		ss << "0" << minutes << "'";
+	else
+		ss << minutes << "'";
+
+	//Append a zero to the seconds if nessecary:
+	if(seconds < 10)
+		ss << "0" << seconds << "\"";
+	else
+		ss << seconds << "\"";
+
+	ss << milliseconds;
 	return ss.str();
 }

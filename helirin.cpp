@@ -1,5 +1,6 @@
 //helirin.cpp
 #include "helirin.h"
+#include <iostream>
 
 sf::Image Helirin::_image;
 
@@ -17,48 +18,69 @@ Helirin::Helirin()
 
 	//Sets the centre of the sprite to the exact centre of 
 	//Helirin, so it rotatates and moves properly:
-	_sprite.setOrigin((_sprite.getLocalBounds().width / 2), //x 
-					(_sprite.getLocalBounds().height / 2)); //y
+	_sprite.setOrigin((_sprite.getLocalBounds().width / 2),   //x 
+					  (_sprite.getLocalBounds().height / 2)); //y
+
+	//Initalise the directional vectors:
+	_previousDirection.x = 0;
+	_previousDirection.y = 0;
+	_currentDirection.x = 0;
+	_currentDirection.y = 0;
 
 	_sprite.setPosition(300, 300);
 
 	_lives = 3;
 }
 
-void Helirin::move(Direction d, float frameTime)
+void Helirin::move(Direction d)
 {
-	//Disable movement if we've collided:
-	if(_hitTimer.getElapsedTime().asSeconds() > COOLDOWN)
+	switch(d)
 	{
-		switch(d)
-		{
-			case UP: 	_sprite.move(0, -(VELOCITY * frameTime)); break;
-			case DOWN:	_sprite.move(0, (VELOCITY * frameTime));  break;
-			case LEFT:	_sprite.move(-(VELOCITY * frameTime), 0); break;
-			case RIGHT:	_sprite.move((VELOCITY * frameTime), 0);  break;
-		}
-		_directionMoved = d;
+		case UP:    if(_currentDirection.y > -1) _currentDirection.y--; break;
+		case DOWN:  if(_currentDirection.y <  1) _currentDirection.y++; break;
+		case LEFT:  if(_currentDirection.x > -1) _currentDirection.x--; break;
+		case RIGHT: if(_currentDirection.x <  1) _currentDirection.x++; break;
 	}
 }
 
 //Handles non-keyboard events, like rotation:
 void Helirin::handleEvents(float frameTime)
 {
+	std::cout << "C: [" << _currentDirection.x;
+	std::cout << ", " << _currentDirection.y << "]" << std::endl;
+	std::cout << "P: [" << _previousDirection.x;
+	std::cout << ", " << _previousDirection.y << "]" << std::endl << std::endl;
 	//Checks if we recently collided, and if so, spin the other way 
 	//around, and move in the opposite direction to the collision:
 	if(_hitTimer.getElapsedTime().asSeconds() <= COOLDOWN)
 	{
-		_sprite.rotate(-ROTATION_SPEED * frameTime);	
-		switch(_directionMoved)
-		{
-			case UP: 	_sprite.move(0, ((VELOCITY * 1.2) * frameTime));  break;
-			case DOWN:	_sprite.move(0, -((VELOCITY * 1.2) * frameTime)); break;
-			case LEFT:	_sprite.move(((VELOCITY * 1.2) * frameTime), 0);  break;
-			case RIGHT:	_sprite.move(-((VELOCITY * 1.2) * frameTime), 0); break;
-		}
+		//Move the Helirin away at a slightly faster rate:
+		_sprite.move(
+					(_previousDirection.x * ((-VELOCITY * 2) * frameTime)), 
+					(_previousDirection.y * ((-VELOCITY * 2) * frameTime)));
+
+		//Rotate the Helirin:
+		_sprite.rotate(-ROTATION_SPEED * frameTime);
 	}
 	else
+	{
+
+		//Move the Helirin:
+		_sprite.move(
+					(_currentDirection.x * (VELOCITY * frameTime)),
+					(_currentDirection.y * (VELOCITY * frameTime)));
+
+		//Save the direction moved in, but only if it's not empty:
+		if((_currentDirection.x != 0) || (_currentDirection.y != 0))
+			_previousDirection = _currentDirection;
+
+		//Reset the current movement vector:
+		_currentDirection.x = 0;
+		_currentDirection.y = 0;
+
+		//Rotate the Helirin:
 		_sprite.rotate(ROTATION_SPEED * frameTime);
+	}
 }
 
 bool Helirin::checkCollision(sf::ConvexShape& s)

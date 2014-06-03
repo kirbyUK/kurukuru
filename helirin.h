@@ -19,7 +19,7 @@ const float VELOCITY = 100.0;
 //The time in seconds it takes for the Helirin to
 //'cooldown' after colliding with a wall. During the
 //'cooldown' period, it spins the other way:
-const float COOLDOWN = 0.4;
+const float COOLDOWN = 0.15;
 
 #ifdef _WIN32
 	const std::string HELIRIN_IMG_PATH = "assets\\helirin\\helirin.png";
@@ -36,9 +36,8 @@ class Helirin
 
 		sf::Clock _hitTimer;
 
-		//The direction we moved this frame,
-		//just in case we need to go back:
-		Direction _directionMoved;
+		DirectionVector _previousDirection;
+		DirectionVector _currentDirection;
 
 		unsigned short int _lives;
 
@@ -48,10 +47,11 @@ class Helirin
 
 		Helirin();
 
-		//Moves the Helirin in the given direction:
-		void move(Direction, float);
+		//Updates the direction vector:
+		void move(Direction);
 
-		//Handles non-keyboard events, like roation:
+		//Handles non-keyboard events, like roation, and actually moves the
+		//Helirin based on the direction vector:
 		void handleEvents(float);
 
 		//Checks for any collisions with the level walls:

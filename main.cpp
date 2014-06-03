@@ -56,13 +56,13 @@ int main()
 
 		//Movement:
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-			helirin.move(UP, frameTime);
+			helirin.move(UP);
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-			helirin.move(DOWN, frameTime);
+			helirin.move(DOWN);
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-			helirin.move(LEFT, frameTime);
+			helirin.move(LEFT);
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-			helirin.move(RIGHT, frameTime);
+			helirin.move(RIGHT);
 
 		//Non-player based events:
 		helirin.handleEvents(frameTime);

@@ -1,6 +1,5 @@
 //helirin.cpp
 #include "helirin.h"
-#include <iostream>
 
 sf::Image Helirin::_image;
 
@@ -46,10 +45,6 @@ void Helirin::move(Direction d)
 //Handles non-keyboard events, like rotation:
 void Helirin::handleEvents(float frameTime)
 {
-	std::cout << "C: [" << _currentDirection.x;
-	std::cout << ", " << _currentDirection.y << "]" << std::endl;
-	std::cout << "P: [" << _previousDirection.x;
-	std::cout << ", " << _previousDirection.y << "]" << std::endl << std::endl;
 	//Checks if we recently collided, and if so, spin the other way 
 	//around, and move in the opposite direction to the collision:
 	if(_hitTimer.getElapsedTime().asSeconds() <= COOLDOWN)

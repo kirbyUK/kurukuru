@@ -24,7 +24,7 @@ int main()
 
 	Helirin helirin;
 	Interface interface;
-	Level level("assets/levels/level1.lvl");
+	Level level("assets/levels/level2.lvl");
 
 	sf::RenderWindow window(sf::VideoMode(800, 600), "KuruKuru Kuruin");
 	sf::View view = window.getDefaultView();

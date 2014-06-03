@@ -157,7 +157,7 @@ std::string Level::getElapsedTime()
 	float total = t.asSeconds();
 	int minutes = total / 60;
 	int seconds = int(total) % 60;
-	int milliseconds = t.asMilliseconds() / 10;
+	int milliseconds = t.asMilliseconds() % 100;
 
 	std::stringstream ss;
 	ss << "TIME: " << minutes << "'" << seconds << "\"" << milliseconds;

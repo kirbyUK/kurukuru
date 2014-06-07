@@ -8,38 +8,15 @@
 #define LEVEL_H
 #include <SFML/Graphics.hpp>
 #include <string>
-
-#ifdef _WIN32
-	const std::string MEADOW_TEXTURE = "assets\\themes\\textures\\meadow.png";
-	const std::string MEADOW_BACKGROUND = "assets\\themes\\backgrounds\\meadow.jpg";
-#else
-	const std::string MEADOW_TEXTURE = "assets/themes/textures/meadow.png";
-	const std::string MEADOW_BACKGROUND = "assets/themes/backgrounds/meadow.jpg";
-#endif
-
-//The various themes:
-enum
-{
-	MEADOW,
-	TOTAL_NUMBER_OF_THEMES,
-};
-
-//The number of seconds added if the player crashes:
-const float PENALTY = 3.0;
+#include "theme.h"
 
 class Level
 {
 	private:
-		static sf::Image _images[TOTAL_NUMBER_OF_THEMES];
-		static sf::Image _backgrounds[TOTAL_NUMBER_OF_THEMES];
-		sf::Texture _levelTexture;
-		sf::Texture _backgroundTexture;
-		sf::Sprite _background;
-
 		//Meta-data:
 		std::string _name;
 		std::string _author;
-		std::string _theme;
+		Theme* _theme;
 
 		//The level is effectively a big shape:
 		sf::ConvexShape _shape;
@@ -54,11 +31,9 @@ class Level
 		short unsigned int _penalties;
 
 	public:
-		//Loads the texture image:
-		static bool init();
-
 		//Loads the level from the passed file:
 		Level(std::string);
+		~Level();
 
 		//Starts the level:
 		void begin();

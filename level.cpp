@@ -5,26 +5,11 @@
 #include <vector>
 #include <cstdlib>
 
+//The number of seconds added if the player crashes:
+float PENALTY = 3.0;
+
 //Seperates the co-ordinates in the level's file:
-const std::string DELIMITER = "->";
-
-sf::Image Level::_images[TOTAL_NUMBER_OF_THEMES];
-sf::Image Level::_backgrounds[TOTAL_NUMBER_OF_THEMES];
-
-bool Level::init()
-{
-	if(! _images[MEADOW].loadFromFile(MEADOW_TEXTURE))
-	{
-		std::cerr << "Failed to load '" << MEADOW_TEXTURE << "'!\n";
-		return false;
-	} 
-	if(! _backgrounds[MEADOW].loadFromFile(MEADOW_BACKGROUND))
-	{
-		std::cerr << "Failed to load '" << MEADOW_BACKGROUND << "'!\n";
-		return false;
-	} 
-	return true;
-}
+std::string DELIMITER = "->";
 
 Level::Level(std::string path)
 {
@@ -32,6 +17,7 @@ Level::Level(std::string path)
 	if(! in)
 		throw "oh noes!";
 
+	std::string theme = "";
 	std::string line = "";
 	while(line != ";;")
 	{
@@ -47,7 +33,7 @@ Level::Level(std::string path)
 		else if(line.find("author=") != std::string::npos)
 			_author = line.substr(7, (line.size() - 7));
 		else if(line.find("theme=") != std::string::npos)
-			_theme = line.substr(6, (line.size() - 6));
+			theme = line.substr(6, (line.size() - 6));
 	}
 	//The rest of the file should be the points (if not someone
 	//has done their job wrong), so just read until the end:
@@ -100,15 +86,10 @@ Level::Level(std::string path)
 		_shape.setPoint(i, points[i]);
 
 	//Work out which textures to use:
-	if(_theme == "meadow")
-	{
-		_levelTexture.loadFromImage(_images[MEADOW]);
-		_backgroundTexture.loadFromImage(_backgrounds[MEADOW]);
-	}
-	_levelTexture.setRepeated(true);
-	_backgroundTexture.setRepeated(true);
-	_shape.setTexture(&_levelTexture);
-	_background.setTexture(_backgroundTexture);
+	if(theme == "meadow")
+		_theme = new Theme(MEADOW);
+
+	_shape.setTexture(&_theme->getTexture());
 	_shape.setTextureRect(sf::IntRect(0, 0, 400, 400));
 
 	//Make the outline:
@@ -118,6 +99,11 @@ Level::Level(std::string path)
 	//Reset the clock (THIS SHOULD BE MOVED TO level::begin())
 	_levelTimer.restart();
 	_penalties = 0;
+}
+
+Level::~Level()
+{
+	delete _theme;
 }
 
 void Level::begin()
@@ -132,8 +118,9 @@ void Level::handleEvents()
 
 void Level::resizeBackground(sf::View v)
 {
-	_background.setPosition((v.getCenter().x - 1000), (v.getCenter().y - 1000));
-	_background.setTextureRect(sf::IntRect(0, 0, v.getSize().x * 4, v.getSize().y * 4));
+	sf::Sprite* b = &_theme->getBackground();
+	b->setPosition((v.getCenter().x - 1000), (v.getCenter().y - 1000));
+	b->setTextureRect(sf::IntRect(0, 0, v.getSize().x * 4, v.getSize().y * 4));
 }
 
 void Level::penalise()
@@ -148,7 +135,7 @@ sf::ConvexShape& Level::getShape()
 
 sf::Sprite& Level::getBackground()
 {
-	return _background;
+	return _theme->getBackground();
 }
 
 std::string Level::getElapsedTime()

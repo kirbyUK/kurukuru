@@ -2,6 +2,13 @@
 #include "interface.h"
 #include <iostream>
 
+//The font paths:
+#ifdef _WIN32
+	const std::string PC_SENIOR = "assets\\fonts\\PC-Senior\\pcsenior.ttf";
+#else
+	const std::string PC_SENIOR = "assets/fonts/PC-Senior/pcsenior.ttf";
+#endif
+
 sf::Font Interface::_pcSenior; 
 
 bool Interface::init()

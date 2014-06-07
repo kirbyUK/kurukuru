@@ -10,13 +10,6 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
-//The font paths:
-#ifdef _WIN32
-	const std::string PC_SENIOR = "assets\\fonts\\PC-Senior\\pcsenior.ttf";
-#else
-	const std::string PC_SENIOR = "assets/fonts/PC-Senior/pcsenior.ttf";
-#endif
-
 //The tags for the text items:
 enum
 {

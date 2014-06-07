@@ -11,15 +11,12 @@ int main()
 {
 	//Loads the Helirin image:
 	if(! Helirin::init())
-	{
-		std::cerr << "Failed to load '" << HELIRIN_IMG_PATH << "'!\n"; 
 		return -1;
-	}
 	//Loads the fonts:
 	if(! Interface::init())
 		return -1; 
 	//Loads the level textures:
-	if(! Level::init())
+	if(! Theme::init())
 		return -1;
 
 	Helirin helirin;

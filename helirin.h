@@ -9,24 +9,6 @@
 #include <SFML/Graphics.hpp>
 #include "constants.h"
 
-//The number of degrees the Helirin rotates per second:
-const float ROTATION_SPEED = 90.0;
-
-//The number of pixels moved in a single second
-//of constant movement in any given direction:
-const float VELOCITY = 100.0;
-
-//The time in seconds it takes for the Helirin to
-//'cooldown' after colliding with a wall. During the
-//'cooldown' period, it spins the other way:
-const float COOLDOWN = 0.15;
-
-#ifdef _WIN32
-	const std::string HELIRIN_IMG_PATH = "assets\\helirin\\helirin.png";
-#else
-	const std::string HELIRIN_IMG_PATH = "assets/helirin/helirin.png";
-#endif
-
 class Helirin
 {
 	private:
